@@ -1,5 +1,7 @@
 'use strict';
 var Zephyros = require('node-zephyros');
+var _ = require('lodash');
+
 var z = new Zephyros();
 
 var moveInScreen = function(screen, multiples) {
@@ -16,6 +18,38 @@ var moveInScreen = function(screen, multiples) {
       win.screen = screen;
       return win;
     });
+};
+
+exports.moveToNextScreen = function() {
+  var screenID;
+
+  z.api()
+    .windowFocused()
+    .screenFromWindow()
+    .then(function(screen) {
+      screenID = screen.id;
+
+      z.api()
+        .screens()
+        .then(function(screens){
+          var notThisScreen = _.find(screens, function(screen) {
+            return screen.id !== screenID;
+          });
+
+          if (notThisScreen) {
+            return notThisScreen;
+          } else {
+            // return original screen
+            return {id: screenID};
+          }
+        })
+        .frameWithoutDockOrMenu()
+        .then(function(screen){
+          console.log(screen.frame);
+        });
+    });
+
+
 };
 
 exports.moveWithinScreen = function(multiples) {

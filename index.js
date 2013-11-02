@@ -21,24 +21,24 @@ var bottomLeft = { x: 0, y: 0.5, w: 0.5, h: 0.5 };
 var bottomRight = { x: 0.5, y: 0.5, w: 0.5, h: 0.5 };
 
 var singleKeyBindings = {
-  'right' : rightHalf,
-  'left'  : leftHalf,
-  'up'    : fullScreen,
-  '1'     : quarter1,
-  '2'     : quarter2,
-  '3'     : quarter3,
-  '4'     : quarter4
+  'right' : function() { moveWithinScreen(rightHalf); },
+  'left'  : function() { moveWithinScreen(leftHalf); },
+  'up'    : function() { moveWithinScreen(fullScreen); },
+  '1'     : function() { moveWithinScreen(quarter1); },
+  '2'     : function() { moveWithinScreen(quarter2); },
+  '3'     : function() { moveWithinScreen(quarter3); },
+  '4'     : function() { moveWithinScreen(quarter4); }
 };
 
 var dualKeyBindings = {
-  'up right'   : topRight,
-  'right up'   : topRight,
-  'up left'    : topLeft,
-  'left up'    : topLeft,
-  'down right' : bottomRight,
-  'right down' : bottomRight,
-  'down left'  : bottomLeft,
-  'left down'  : bottomLeft
+  'up right'   : function() { moveWithinScreen(topRight); },
+  'right up'   : function() { moveWithinScreen(topRight); },
+  'up left'    : function() { moveWithinScreen(topLeft); },
+  'left up'    : function() { moveWithinScreen(topLeft); },
+  'down right' : function() { moveWithinScreen(bottomRight); },
+  'right down' : function() { moveWithinScreen(bottomRight); },
+  'down left'  : function() { moveWithinScreen(bottomLeft); },
+  'left down'  : function() { moveWithinScreen(bottomLeft); }
 };
 
 var lastKey = '';
@@ -50,11 +50,11 @@ vent.on('shortcut', function(key) {
   if (now - lastTime < 300) {
     key += ' ' + lastKey;
     if (dualKeyBindings[key]) {
-      moveWithinScreen(dualKeyBindings[key]);
+      dualKeyBindings[key].call(this);
     }
   } else {
     if (singleKeyBindings[key]) {
-      moveWithinScreen(singleKeyBindings[key]);
+      singleKeyBindings[key].call(this);
     }
   }
 
