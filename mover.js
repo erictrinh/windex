@@ -31,7 +31,7 @@ exports.moveToNextScreen = function() {
 
       z.api()
         .screens()
-        .then(function(screens){
+        .then(function(screens) {
           var notThisScreen = _.find(screens, function(screen) {
             return screen.id !== screenID;
           });
@@ -44,8 +44,13 @@ exports.moveToNextScreen = function() {
           }
         })
         .frameWithoutDockOrMenu()
-        .then(function(screen){
-          console.log(screen.frame);
+        .then(function(screen) {
+          moveInScreen(screen, {
+            x: 0,
+            y: 0,
+            w: 1,
+            h: 1
+          });
         });
     });
 

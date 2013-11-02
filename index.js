@@ -2,7 +2,7 @@
 
 var vent = require('./shortcut_emitter');
 
-var mover = require('./move_window');
+var mover = require('./mover');
 var moveWithinScreen = mover.moveWithinScreen;
 var moveToNextScreen = mover.moveToNextScreen;
 
@@ -31,14 +31,16 @@ var singleKeyBindings = {
 };
 
 var dualKeyBindings = {
-  'up right'   : function() { moveWithinScreen(topRight); },
-  'right up'   : function() { moveWithinScreen(topRight); },
-  'up left'    : function() { moveWithinScreen(topLeft); },
-  'left up'    : function() { moveWithinScreen(topLeft); },
-  'down right' : function() { moveWithinScreen(bottomRight); },
-  'right down' : function() { moveWithinScreen(bottomRight); },
-  'down left'  : function() { moveWithinScreen(bottomLeft); },
-  'left down'  : function() { moveWithinScreen(bottomLeft); }
+  'up right'    : function() { moveWithinScreen(topRight); },
+  'right up'    : function() { moveWithinScreen(topRight); },
+  'up left'     : function() { moveWithinScreen(topLeft); },
+  'left up'     : function() { moveWithinScreen(topLeft); },
+  'down right'  : function() { moveWithinScreen(bottomRight); },
+  'right down'  : function() { moveWithinScreen(bottomRight); },
+  'down left'   : function() { moveWithinScreen(bottomLeft); },
+  'left down'   : function() { moveWithinScreen(bottomLeft); },
+  'right right' : function() { moveToNextScreen(); },
+  'left left'   : function() { moveToNextScreen(); }
 };
 
 var lastKey = '';
@@ -47,15 +49,12 @@ var lastTime = Date.now();
 vent.on('shortcut', function(key) {
   var now = Date.now();
 
-  if (now - lastTime < 300) {
-    key += ' ' + lastKey;
-    if (dualKeyBindings[key]) {
-      dualKeyBindings[key].call(this);
-    }
-  } else {
-    if (singleKeyBindings[key]) {
-      singleKeyBindings[key].call(this);
-    }
+  var dualKey = key + ' ' + lastKey;
+
+  if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
+    dualKeyBindings[dualKey].call(this);
+  } else if (singleKeyBindings[key]) {
+    singleKeyBindings[key].call(this);
   }
 
   lastKey = key;
