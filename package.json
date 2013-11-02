@@ -1,0 +1,15 @@
+{
+  "name": "windex",
+  "version": "0.0.0",
+  "description": "Makes window management sparkle with glee",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eric Trinh",
+  "license": "MIT",
+  "dependencies": {
+    "node-zephyros": "~0.2.2",
+    "lodash": "~2.2.1"
+  }
+}
