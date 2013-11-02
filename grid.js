@@ -9,7 +9,7 @@ module.exports = function(columnNumber, totalColumns, columnSpan) {
   return {
     x: (columnNumber - 1) / totalColumns,
     y: 0,
-    w: 1 / totalColumns,
+    w: 1 / totalColumns * columnSpan,
     h: 1
   };
 };

@@ -38,8 +38,14 @@ var dualKeyBindings = {
   'right down'  : function() { moveWithinScreen(bottomRight); },
   'down left'   : function() { moveWithinScreen(bottomLeft); },
   'left down'   : function() { moveWithinScreen(bottomLeft); },
+
   'right right' : moveToNextScreen,
-  'left left'   : moveToNextScreen
+  'left left'   : moveToNextScreen,
+
+  '1 2'         : function() { moveWithinScreen(grid(1, 3, 2)); },
+  '2 1'         : function() { moveWithinScreen(grid(1, 3, 2)); },
+  '2 3'         : function() { moveWithinScreen(grid(2, 3, 2)); },
+  '3 2'         : function() { moveWithinScreen(grid(2, 3, 2)); }
 };
 
 var lastKey = '';
