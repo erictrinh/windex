@@ -53,8 +53,6 @@ exports.moveToNextScreen = function() {
           });
         });
     });
-
-
 };
 
 exports.moveWithinScreen = function(multiples) {

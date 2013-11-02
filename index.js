@@ -2,18 +2,18 @@
 
 var vent = require('./shortcut_emitter');
 
-var mover = require('./mover');
-var moveWithinScreen = mover.moveWithinScreen;
-var moveToNextScreen = mover.moveToNextScreen;
+var mover = require('./mover'),
+  moveWithinScreen = mover.moveWithinScreen,
+  moveToNextScreen = mover.moveToNextScreen;
 
-var rightHalf  = { x: 0.5, y: 0, w: 0.5, h: 1 };
-var leftHalf   = { x: 0, y: 0, w: 0.5, h: 1 };
-var fullScreen = { x: 0, y: 0, w: 1, h: 1 };
+var grid = require('./grid');
 
-var quarter1   = { x: 0, y: 0, w: 0.25, h: 1 };
-var quarter2   = { x: 0.25, y: 0, w: 0.25, h: 1 };
-var quarter3   = { x: 0.5, y: 0, w: 0.25, h: 1 };
-var quarter4   = { x: 0.75, y: 0, w: 0.25, h: 1 };
+var leftHalf   = grid(1, 2),
+    rightHalf  = grid(2, 2),
+    fullScreen = grid(1, 1),
+    third1     = grid(1, 3),
+    third2     = grid(2, 3),
+    third3     = grid(3, 3);
 
 var topLeft = { x: 0, y: 0, w: 0.5, h: 0.5 };
 var topRight = { x: 0.5, y: 0, w: 0.5, h: 0.5 };
@@ -24,10 +24,9 @@ var singleKeyBindings = {
   'right' : function() { moveWithinScreen(rightHalf); },
   'left'  : function() { moveWithinScreen(leftHalf); },
   'up'    : function() { moveWithinScreen(fullScreen); },
-  '1'     : function() { moveWithinScreen(quarter1); },
-  '2'     : function() { moveWithinScreen(quarter2); },
-  '3'     : function() { moveWithinScreen(quarter3); },
-  '4'     : function() { moveWithinScreen(quarter4); }
+  '1'     : function() { moveWithinScreen(third1); },
+  '2'     : function() { moveWithinScreen(third2); },
+  '3'     : function() { moveWithinScreen(third3); },
 };
 
 var dualKeyBindings = {
@@ -39,8 +38,8 @@ var dualKeyBindings = {
   'right down'  : function() { moveWithinScreen(bottomRight); },
   'down left'   : function() { moveWithinScreen(bottomLeft); },
   'left down'   : function() { moveWithinScreen(bottomLeft); },
-  'right right' : function() { moveToNextScreen(); },
-  'left left'   : function() { moveToNextScreen(); }
+  'right right' : moveToNextScreen,
+  'left left'   : moveToNextScreen
 };
 
 var lastKey = '';
