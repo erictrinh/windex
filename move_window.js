@@ -1,6 +1,8 @@
 'use strict';
+var Zephyros = require('node-zephyros');
+var z = new Zephyros();
 
-module.exports = function(z, multiples) {
+module.exports = function(multiples) {
   z.api()
     .windowFocused()
     .screenFromWindow()

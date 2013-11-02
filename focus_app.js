@@ -10,6 +10,5 @@ module.exports = function(appName) {
     if (error !== null) {
       console.log('exec error: ' + error);
     }
-    child.kill();
   });
 };
