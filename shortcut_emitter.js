@@ -42,10 +42,16 @@ z.bind('4', hyper).then(function() {
   vent.emit('shortcut', '4');
 });
 
+// get next screen
 z.bind('t', ['Cmd', 'Shift'])
 .screens()
 .then(function(screens){
   screens.forEach(console.log);
+  return screens[0];
+})
+.frameWithoutDockOrMenu()
+.then(function(screen){
+  console.log(screen.frame); //{ x: 0, y: 0, w: 80, h: 80 }
 });
 
 var appBindings = {

@@ -2,7 +2,9 @@
 
 var vent = require('./shortcut_emitter');
 
-var moveWindow = require('./move_window');
+var mover = require('./move_window');
+var moveWithinScreen = mover.moveWithinScreen;
+var moveToNextScreen = mover.moveToNextScreen;
 
 var rightHalf  = { x: 0.5, y: 0, w: 0.5, h: 1 };
 var leftHalf   = { x: 0, y: 0, w: 0.5, h: 1 };
@@ -48,11 +50,11 @@ vent.on('shortcut', function(key) {
   if (now - lastTime < 300) {
     key += ' ' + lastKey;
     if (dualKeyBindings[key]) {
-      moveWindow(dualKeyBindings[key]);
+      moveWithinScreen(dualKeyBindings[key]);
     }
   } else {
     if (singleKeyBindings[key]) {
-      moveWindow(singleKeyBindings[key]);
+      moveWithinScreen(singleKeyBindings[key]);
     }
   }
 
