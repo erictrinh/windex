@@ -4,7 +4,7 @@ module.exports = function(z, multiples) {
   z.api()
     .windowFocused()
     .screenFromWindow()
-    .frameIncludingDockAndMenu()
+    .frameWithoutDockOrMenu()
     .then(function(screen) {
       var frame = screen.frame;
 
@@ -12,10 +12,11 @@ module.exports = function(z, multiples) {
         .windowFocused()
         .getWindowFrame()
         .setWindowFrame(function(win) {
-          win.frame.x = frame.w * multiples.x;
-          win.frame.y = frame.h * multiples.y;
+          win.frame.x = frame.x + frame.w * multiples.x;
+          win.frame.y = frame.y + frame.h * multiples.y;
           win.frame.w = frame.w * multiples.w;
           win.frame.h = frame.h * multiples.h;
+          win.screen = screen;
           return win;
         });
     });
