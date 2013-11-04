@@ -1,4 +1,5 @@
 'use strict';
+
 var Zephyros = require('node-zephyros');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('lodash');

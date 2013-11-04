@@ -1,4 +1,5 @@
 'use strict';
+
 var Zephyros = require('node-zephyros');
 var _ = require('lodash');
 
@@ -22,37 +23,56 @@ var moveInScreen = function(screen, multiples) {
 
 exports.moveToNextScreen = function() {
   var screenID;
+  var windowFrame;
+  var screenFrame;
 
   z.api()
     .windowFocused()
+    .getWindowFrame()
+    .then(function(window) {
+      windowFrame = window.frame;
+      return window;
+    })
     .screenFromWindow()
     .then(function(screen) {
       screenID = screen.id;
+      return screen;
+    })
+    .frameWithoutDockOrMenu()
+    .then(function(screen) {
+      screenFrame = screen.frame;
 
-      z.api()
-        .screens()
-        .then(function(screens) {
-          var notThisScreen = _.find(screens, function(screen) {
-            return screen.id !== screenID;
-          });
-
-          if (notThisScreen) {
-            return notThisScreen;
-          } else {
-            // return original screen
-            return {id: screenID};
-          }
-        })
-        .frameWithoutDockOrMenu()
-        .then(function(screen) {
-          moveInScreen(screen, {
-            x: 0,
-            y: 0,
-            w: 1,
-            h: 1
-          });
-        });
+      doActualMove(windowFrame, screenFrame);
     });
+
+  function doActualMove(winFrame, oldScreenFrame) {
+    var newCoords = {
+      x: (winFrame.x - oldScreenFrame.x) / oldScreenFrame.w,
+      y: (winFrame.y - oldScreenFrame.y) / oldScreenFrame.h,
+      w: winFrame.w / oldScreenFrame.w,
+      h: winFrame.h / oldScreenFrame.h
+    };
+
+    console.log(newCoords.x, newCoords.y, newCoords.w, newCoords.h);
+    z.api()
+      .screens()
+      .then(function(screens) {
+        var notThisScreen = _.find(screens, function(screen) {
+          return screen.id !== screenID;
+        });
+
+        if (notThisScreen) {
+          return notThisScreen;
+        } else {
+          // return original screen
+          return {id: screenID};
+        }
+      })
+      .frameWithoutDockOrMenu()
+      .then(function(screen) {
+        moveInScreen(screen, newCoords);
+      });
+  }
 };
 
 exports.moveWithinScreen = function(multiples) {
