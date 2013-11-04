@@ -8,12 +8,20 @@ var mover = require('./mover'),
 
 var grid = require('./grid');
 
+var mode = 3;
+
+var changeMode = function(newMode) {
+  mode = newMode;
+  vent.emit('alert', 'Change Mode ' + mode);
+};
+
 var leftHalf   = grid(1, 2),
     rightHalf  = grid(2, 2),
     fullScreen = grid(1, 1),
-    third1     = grid(1, 3),
-    third2     = grid(2, 3),
-    third3     = grid(3, 3);
+    slice1     = function() { return grid(1, mode); },
+    slice2     = function() { return grid(2, mode); },
+    slice3     = function() { return grid(3, mode); },
+    slice4     = function() { return grid(4, mode); };
 
 var topLeft = { x: 0, y: 0, w: 0.5, h: 0.5 };
 var topRight = { x: 0.5, y: 0, w: 0.5, h: 0.5 };
@@ -21,12 +29,15 @@ var bottomLeft = { x: 0, y: 0.5, w: 0.5, h: 0.5 };
 var bottomRight = { x: 0.5, y: 0.5, w: 0.5, h: 0.5 };
 
 var singleKeyBindings = {
-  'right' : function() { moveWithinScreen(rightHalf); },
-  'left'  : function() { moveWithinScreen(leftHalf); },
-  'up'    : function() { moveWithinScreen(fullScreen); },
-  '1'     : function() { moveWithinScreen(third1); },
-  '2'     : function() { moveWithinScreen(third2); },
-  '3'     : function() { moveWithinScreen(third3); },
+  'right'  : function() { moveWithinScreen(rightHalf); },
+  'left'   : function() { moveWithinScreen(leftHalf); },
+  'return' : function() { moveWithinScreen(fullScreen); },
+  '1'      : function() { moveWithinScreen(slice1()); },
+  '2'      : function() { moveWithinScreen(slice2()); },
+  '3'      : function() { moveWithinScreen(slice3()); },
+  '4'      : function() { moveWithinScreen(slice4()); },
+
+  '`' : moveToNextScreen,
 };
 
 var dualKeyBindings = {
@@ -39,13 +50,19 @@ var dualKeyBindings = {
   'down left'   : function() { moveWithinScreen(bottomLeft); },
   'left down'   : function() { moveWithinScreen(bottomLeft); },
 
-  'right right' : moveToNextScreen,
-  'left left'   : moveToNextScreen,
 
-  '1 2'         : function() { moveWithinScreen(grid(1, 3, 2)); },
-  '2 1'         : function() { moveWithinScreen(grid(1, 3, 2)); },
-  '2 3'         : function() { moveWithinScreen(grid(2, 3, 2)); },
-  '3 2'         : function() { moveWithinScreen(grid(2, 3, 2)); }
+
+  '3 3' : function() { changeMode(3); },
+  '4 4' : function() { changeMode(4); },
+
+  '1 2' : function() { moveWithinScreen(grid(1, mode, 2)); },
+  '2 1' : function() { moveWithinScreen(grid(1, mode, 2)); },
+  '2 3' : function() { moveWithinScreen(grid(2, mode, 2)); },
+  '3 2' : function() { moveWithinScreen(grid(2, mode, 2)); },
+  '1 3' : function() { moveWithinScreen(grid(1, mode, 3)); },
+  '3 1' : function() { moveWithinScreen(grid(1, mode, 3)); },
+  '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); },
+  '4 2' : function() { moveWithinScreen(grid(2, mode, 3)); }
 };
 
 var lastKey = '';

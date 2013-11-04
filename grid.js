@@ -5,6 +5,9 @@
 
 module.exports = function(columnNumber, totalColumns, columnSpan) {
   columnSpan = columnSpan || 1;
+  if (columnNumber > totalColumns) {
+    columnNumber = totalColumns;
+  }
 
   return {
     x: (columnNumber - 1) / totalColumns,

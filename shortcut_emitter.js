@@ -10,6 +10,10 @@ var z = new Zephyros();
 
 var hyper = ['Cmd', 'Shift', 'Ctrl', 'Alt'];
 
+z.bind('return', hyper).then(function() {
+  vent.emit('shortcut', 'return');
+});
+
 z.bind('right', hyper).then(function() {
   vent.emit('shortcut', 'right');
 });
@@ -42,6 +46,10 @@ z.bind('4', hyper).then(function() {
   vent.emit('shortcut', '4');
 });
 
+z.bind('`', hyper).then(function() {
+  vent.emit('shortcut', '`');
+});
+
 // get next screen
 z.bind('t', ['Cmd', 'Shift'])
 .screens()
@@ -71,6 +79,10 @@ _.pairs(appBindings).forEach(function(pair) {
   z.bind(shortcut, hyper).then(function() {
     focusApp(app);
   });
+});
+
+vent.on('alert', function(message) {
+  z.api().alert(message);
 });
 
 module.exports = vent;
