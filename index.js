@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 var vent = require('./shortcut_emitter');
 
 var mover = require('./mover'),
@@ -42,26 +44,31 @@ var singleKeyBindings = {
 
 var dualKeyBindings = {
   'up right'    : function() { moveWithinScreen(topRight); },
-  'right up'    : function() { moveWithinScreen(topRight); },
   'up left'     : function() { moveWithinScreen(topLeft); },
-  'left up'     : function() { moveWithinScreen(topLeft); },
   'down right'  : function() { moveWithinScreen(bottomRight); },
-  'right down'  : function() { moveWithinScreen(bottomRight); },
   'down left'   : function() { moveWithinScreen(bottomLeft); },
-  'left down'   : function() { moveWithinScreen(bottomLeft); },
 
   '3 3' : function() { changeMode(3); },
   '4 4' : function() { changeMode(4); },
 
   '1 2' : function() { moveWithinScreen(grid(1, mode, 2)); },
-  '2 1' : function() { moveWithinScreen(grid(1, mode, 2)); },
   '2 3' : function() { moveWithinScreen(grid(2, mode, 2)); },
-  '3 2' : function() { moveWithinScreen(grid(2, mode, 2)); },
   '1 3' : function() { moveWithinScreen(grid(1, mode, 3)); },
-  '3 1' : function() { moveWithinScreen(grid(1, mode, 3)); },
   '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); },
-  '4 2' : function() { moveWithinScreen(grid(2, mode, 3)); }
 };
+
+var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
+  var key = binding[0],
+    val = binding[1],
+    twoKeys = key.split(' '),
+    reversed = _(twoKeys).reverse().join(' ').valueOf();
+
+  return [reversed, val];
+}).object().valueOf();
+
+_.extend(dualKeyBindings, reversedKeyBindings);
+
+console.log(_.keys(dualKeyBindings).toString());
 
 var lastKey = '';
 var lastTime = Date.now();
