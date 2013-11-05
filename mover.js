@@ -52,7 +52,6 @@ exports.moveToNextScreen = function() {
       h: winFrame.h / oldScreenFrame.h
     };
 
-    console.log(newCoords.x, newCoords.y, newCoords.w, newCoords.h);
     z.api()
       .screens()
       .then(function(screens) {
