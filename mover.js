@@ -16,7 +16,6 @@ var moveInScreen = function(screen, multiples) {
       win.frame.y = frame.y + frame.h * multiples.y;
       win.frame.w = frame.w * multiples.w;
       win.frame.h = frame.h * multiples.h;
-      win.screen = screen;
       return win;
     });
 };
