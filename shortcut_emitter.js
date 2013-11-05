@@ -51,18 +51,6 @@ z.bind('`', hyper).then(function() {
   vent.emit('shortcut', '`');
 });
 
-// get next screen
-z.bind('t', ['Cmd', 'Shift'])
-.screens()
-.then(function(screens){
-  screens.forEach(console.log);
-  return screens[0];
-})
-.frameWithoutDockOrMenu()
-.then(function(screen){
-  console.log(screen.frame); //{ x: 0, y: 0, w: 80, h: 80 }
-});
-
 var appBindings = {
   'c': 'Google Chrome',
   'g': 'GitHub',
@@ -82,8 +70,8 @@ _.pairs(appBindings).forEach(function(pair) {
   });
 });
 
-vent.on('alert', function(message) {
-  z.api().alert(message);
+vent.on('changeMode', function(mode) {
+  z.api().alert('Change mode ' + mode);
 });
 
 module.exports = vent;

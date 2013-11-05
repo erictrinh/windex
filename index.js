@@ -12,7 +12,7 @@ var mode = 3;
 
 var changeMode = function(newMode) {
   mode = newMode;
-  vent.emit('alert', 'Change Mode ' + mode);
+  vent.emit('changeMode', mode);
 };
 
 var leftHalf   = grid(1, 2),
@@ -49,8 +49,6 @@ var dualKeyBindings = {
   'right down'  : function() { moveWithinScreen(bottomRight); },
   'down left'   : function() { moveWithinScreen(bottomLeft); },
   'left down'   : function() { moveWithinScreen(bottomLeft); },
-
-
 
   '3 3' : function() { changeMode(3); },
   '4 4' : function() { changeMode(4); },
