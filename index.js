@@ -1,14 +1,11 @@
 'use strict';
 
-var _ = require('lodash');
-
-var vent = require('./shortcut_emitter');
-
-var mover = require('./mover'),
+var _ = require('lodash'),
+  vent = require('./shortcut_emitter'),
+  mover = require('./mover'),
   moveWithinScreen = mover.moveWithinScreen,
-  moveToNextScreen = mover.moveToNextScreen;
-
-var grid = require('./grid');
+  moveToNextScreen = mover.moveToNextScreen,
+  grid = require('./grid');
 
 var mode = 3;
 
@@ -17,29 +14,24 @@ var changeMode = function(newMode) {
   vent.emit('changeMode', mode);
 };
 
-var leftHalf   = grid(1, 2),
-    rightHalf  = grid(2, 2),
-    fullScreen = grid(1, 1),
-    slice1     = function() { return grid(1, mode); },
-    slice2     = function() { return grid(2, mode); },
-    slice3     = function() { return grid(3, mode); },
-    slice4     = function() { return grid(4, mode); };
-
-var topLeft = { x: 0, y: 0, w: 0.5, h: 0.5 };
-var topRight = { x: 0.5, y: 0, w: 0.5, h: 0.5 };
-var bottomLeft = { x: 0, y: 0.5, w: 0.5, h: 0.5 };
-var bottomRight = { x: 0.5, y: 0.5, w: 0.5, h: 0.5 };
+var leftHalf    = grid(1, 2),
+    rightHalf   = grid(2, 2),
+    fullScreen  = grid(1, 1),
+    topLeft     = grid(1, 2, 1, 1, 2, 1),
+    topRight    = grid(2, 2, 1, 1, 2, 1),
+    bottomLeft  = grid(1, 2, 1, 2, 2, 1),
+    bottomRight = grid(2, 2, 1, 2, 2, 1);
 
 var singleKeyBindings = {
   'right'  : function() { moveWithinScreen(rightHalf); },
   'left'   : function() { moveWithinScreen(leftHalf); },
   'return' : function() { moveWithinScreen(fullScreen); },
-  '1'      : function() { moveWithinScreen(slice1()); },
-  '2'      : function() { moveWithinScreen(slice2()); },
-  '3'      : function() { moveWithinScreen(slice3()); },
-  '4'      : function() { moveWithinScreen(slice4()); },
+  '1'      : function() { moveWithinScreen(grid(1, mode)); },
+  '2'      : function() { moveWithinScreen(grid(2, mode)); },
+  '3'      : function() { moveWithinScreen(grid(3, mode)); },
+  '4'      : function() { moveWithinScreen(grid(4, mode)); },
 
-  '`' : moveToNextScreen,
+  '`' : moveToNextScreen
 };
 
 var dualKeyBindings = {
@@ -54,7 +46,7 @@ var dualKeyBindings = {
   '1 2' : function() { moveWithinScreen(grid(1, mode, 2)); },
   '2 3' : function() { moveWithinScreen(grid(2, mode, 2)); },
   '1 3' : function() { moveWithinScreen(grid(1, mode, 3)); },
-  '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); },
+  '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); }
 };
 
 var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
