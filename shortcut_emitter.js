@@ -56,6 +56,10 @@ z.bind('o', hyper).then(function() {
   runScript('openlatest');
 });
 
+z.bind('f', hyper).then(function() {
+  runScript('openfinder');
+});
+
 var appBindings = {
   'c': 'Google Chrome',
   'g': 'GitHub',
