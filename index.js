@@ -60,8 +60,6 @@ var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
 
 _.extend(dualKeyBindings, reversedKeyBindings);
 
-console.log(_.keys(dualKeyBindings).toString());
-
 var lastKey = '';
 var lastTime = Date.now();
 

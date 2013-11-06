@@ -4,7 +4,8 @@ var Zephyros = require('node-zephyros');
 var EventEmitter = require('events').EventEmitter;
 var _ = require('lodash');
 
-var focusApp = require('./focus_app');
+var runScript = require('./run_script');
+var focusApp = runScript.bind(null, 'findopen');
 
 var vent = new EventEmitter();
 var z = new Zephyros();
@@ -49,6 +50,10 @@ z.bind('4', hyper).then(function() {
 
 z.bind('`', hyper).then(function() {
   vent.emit('shortcut', '`');
+});
+
+z.bind('o', hyper).then(function() {
+  runScript('openlatest');
 });
 
 var appBindings = {
