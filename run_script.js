@@ -8,7 +8,7 @@ module.exports = function(scriptName) {
     return arg.replace(' ', '\\ ');
   }).join(' ');
 
-  var command = 'sh ' + __dirname + '/' + scriptName + '.sh';
+  var command = 'sh ' + __dirname + '/shell_scripts/' + scriptName + '.sh';
 
   if (args) {
     command += ' ' + args;
