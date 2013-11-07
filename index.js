@@ -89,8 +89,7 @@ vent.on('shortcut', function(key) {
     } else {
       focusApp(app);
     }
-  }
-  if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
+  } else if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
     dualKeyBindings[dualKey].call(this);
   } else if (singleKeyBindings[key]) {
     singleKeyBindings[key].call(this);
