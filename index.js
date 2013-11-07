@@ -5,13 +5,15 @@ var _ = require('lodash'),
   mover = require('./mover'),
   moveWithinScreen = mover.moveWithinScreen,
   moveToNextScreen = mover.moveToNextScreen,
-  grid = require('./grid');
+  grid = require('./grid'),
+  runScript = require('./run_script'),
+  focusApp = runScript.bind(null, 'findopen');
 
 var mode = 3;
 
 var changeMode = function(newMode) {
   mode = newMode;
-  vent.emit('changeMode', mode);
+  vent.emit('alert', 'Change mode ' + mode);
 };
 
 var leftHalf    = grid(1, 2),
@@ -49,6 +51,17 @@ var dualKeyBindings = {
   '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); }
 };
 
+var appBindings = {
+  'f': 'Finder',
+  'c': 'Google Chrome',
+  'g': 'GitHub',
+  's': 'Sublime Text',
+  'y': 'Spotify',
+  'm': 'Messages',
+  'h': 'HipChat',
+  't': 'Terminal'
+};
+
 var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
   var key = binding[0],
     val = binding[1],
@@ -68,6 +81,15 @@ vent.on('shortcut', function(key) {
 
   var dualKey = key + ' ' + lastKey;
 
+  var app = appBindings[key];
+
+  if (app) {
+    if (app === 'Finder') {
+      runScript('openfinder');
+    } else {
+      focusApp(app);
+    }
+  }
   if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
     dualKeyBindings[dualKey].call(this);
   } else if (singleKeyBindings[key]) {
