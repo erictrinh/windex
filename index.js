@@ -25,30 +25,30 @@ var leftHalf    = grid(1, 2),
     bottomRight = grid(2, 2, 1, 2, 2, 1);
 
 var singleKeyBindings = {
-  'right'  : moveWithinScreen.bind(null, rightHalf),
-  'left'   : moveWithinScreen.bind(null, leftHalf),
-  'return' : moveWithinScreen.bind(null, fullScreen),
-  '1'      : moveWithinScreen.bind(null, grid(1, mode)),
-  '2'      : moveWithinScreen.bind(null, grid(2, mode)),
-  '3'      : moveWithinScreen.bind(null, grid(3, mode)),
-  '4'      : moveWithinScreen.bind(null, grid(4, mode)),
+  'right'  : function() { moveWithinScreen(rightHalf); },
+  'left'   : function() { moveWithinScreen(leftHalf); },
+  'return' : function() { moveWithinScreen(fullScreen); },
+  '1'      : function() { moveWithinScreen(grid(1, mode)); },
+  '2'      : function() { moveWithinScreen(grid(2, mode)); },
+  '3'      : function() { moveWithinScreen(grid(3, mode)); },
+  '4'      : function() { moveWithinScreen(grid(4, mode)); },
 
   '`' : moveToNextScreen
 };
 
 var dualKeyBindings = {
-  'up right'    : moveWithinScreen.bind(null, topRight),
-  'up left'     : moveWithinScreen.bind(null, topLeft),
-  'down right'  : moveWithinScreen.bind(null, bottomRight),
-  'down left'   : moveWithinScreen.bind(null, bottomLeft),
+  'up right'    : function() { moveWithinScreen(topRight); },
+  'up left'     : function() { moveWithinScreen(topLeft); },
+  'down right'  : function() { moveWithinScreen(bottomRight); },
+  'down left'   : function() { moveWithinScreen(bottomLeft); },
 
-  '3 3' : changeMode.bind(null, 3),
-  '4 4' : changeMode.bind(null, 4),
+  '3 3' : function() { changeMode(3); },
+  '4 4' : function() { changeMode(4); },
 
-  '1 2' : moveWithinScreen.bind(null, grid(1, mode, 2)),
-  '2 3' : moveWithinScreen.bind(null, grid(2, mode, 2)),
-  '1 3' : moveWithinScreen.bind(null, grid(1, mode, 3)),
-  '2 4' : moveWithinScreen.bind(null, grid(2, mode, 3))
+  '1 2' : function() { moveWithinScreen(grid(1, mode, 2)); },
+  '2 3' : function() { moveWithinScreen(grid(2, mode, 2)); },
+  '1 3' : function() { moveWithinScreen(grid(1, mode, 3)); },
+  '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); }
 };
 
 var appBindings = {
@@ -90,7 +90,7 @@ vent.on('shortcut', function(key) {
       focusApp(app);
     }
   }
-  else if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
+  if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
     dualKeyBindings[dualKey].call(this);
   } else if (singleKeyBindings[key]) {
     singleKeyBindings[key].call(this);
