@@ -12,6 +12,13 @@
 #import <Foundation/Foundation.h>
 #import <ApplicationServices/ApplicationServices.h>
 
+void PostMouseEvent(CGMouseButton button, CGEventType type, const CGPoint point)
+{
+    CGEventRef theEvent = CGEventCreateMouseEvent(NULL, type, point, button);
+    CGEventSetType(theEvent, type);
+    CGEventPost(kCGHIDEventTap, theEvent);
+    CFRelease(theEvent);
+}
 
 int main(int argc, char *argv[]) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -31,17 +38,7 @@ int main(int argc, char *argv[]) {
   pt.x = x;
   pt.y = y;
 
-
-  // This is where the magic happens.  See CGRemoteOperation.h for details.
-  //
-  // CGPostMouseEvent( CGPoint        mouseCursorPosition,
-  //                   boolean_t      updateMouseCursorPosition,
-  //                   CGButtonCount  buttonCount,
-  //                   boolean_t      mouseButtonDown, ... )
-  //
-  // So, we feed coordinates to CGPostMouseEvent and put the mouse there
-  //
-  CGPostMouseEvent( pt, 1, 1, false );
+  PostMouseEvent( kCGMouseButtonLeft, kCGEventMouseMoved, pt );
 
   [pool release];
   return 0;
