@@ -5,6 +5,8 @@ var _ = require('lodash');
 
 var z = new Zephyros();
 
+var runScript = require('./run_script');
+
 var moveInScreen = function(screen, multiples) {
   var frame = screen.frame;
 
@@ -80,5 +82,19 @@ exports.moveWithinScreen = function(multiples) {
     .frameWithoutDockOrMenu()
     .then(function(screen) {
       moveInScreen(screen, multiples);
+    });
+};
+
+exports.moveMouse = function() {
+  z.api()
+    .windowFocused()
+    .screenFromWindow()
+    .frameWithoutDockOrMenu()
+    .then(function(screen) {
+      console.log(screen);
+      var w = screen.frame.w,
+        h = screen.frame.h;
+
+      runScript('move', {x: w/2, y: h/2});
     });
 };

@@ -5,9 +5,11 @@ var _ = require('lodash'),
   mover = require('./mover'),
   moveWithinScreen = mover.moveWithinScreen,
   moveToNextScreen = mover.moveToNextScreen,
+  moveMouse = mover.moveMouse,
   grid = require('./grid'),
   runScript = require('./run_script'),
-  focusApp = runScript.bind(null, 'findopen');
+  focusApp = runScript.bind(null, 'findopen.sh'),
+  openLatest = runScript.bind(null, 'openlatest.sh');
 
 var mode = 3;
 
@@ -33,7 +35,13 @@ var singleKeyBindings = {
   '3'      : function() { moveWithinScreen(grid(3, mode)); },
   '4'      : function() { moveWithinScreen(grid(4, mode)); },
 
-  '`' : moveToNextScreen
+  'o'      : openLatest,
+
+  '`' : moveToNextScreen,
+  'delete' : function() {
+    vent.emit('alert', 'Center mouse');
+    moveMouse();
+  }
 };
 
 var dualKeyBindings = {
@@ -85,7 +93,7 @@ vent.on('shortcut', function(key) {
 
   if (app) {
     if (app === 'Finder') {
-      runScript('openfinder');
+      runScript('openfinder.sh');
     } else {
       focusApp(app);
     }

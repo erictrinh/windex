@@ -9,9 +9,9 @@ var z = new Zephyros();
 var hyper = ['Cmd', 'Shift', 'Ctrl', 'Alt'];
 
 [
-  'return',
+  'return', 'delete',
   'right', 'left', 'up', 'down',
-  '`',
+  '`', '=', '+',
   '1', '2', '3', '4',
   'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
   'n', 'o', 'p', 'q','r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'

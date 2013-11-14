@@ -1,2 +1,2 @@
 cd ~/Downloads
-open `find . | sort | tail -n 1`
+open `ls -tr | tail -n 1`
