@@ -23,13 +23,13 @@ void PostMouseEvent(CGMouseButton button, CGEventType type, const CGPoint point)
 int main(int argc, char *argv[]) {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSUserDefaults *args = [NSUserDefaults standardUserDefaults];
-
+  NSString *xarg = [NSString stringWithUTF8String:argv[1]];
+  NSString *yarg = [NSString stringWithUTF8String:argv[2]];
 
   // grabs command line arguments -x and -y
   //
-  int x = [args integerForKey:@"x"];
-  int y = [args integerForKey:@"y"];
-
+  int x = [xarg intValue];
+  int y = [yarg intValue];
 
   // The data structure CGPoint represents a point in a two-dimensional
   // coordinate system.  Here, X and Y distance from upper left, in pixels.

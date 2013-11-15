@@ -7,7 +7,7 @@ module.exports = function(scriptName, options) {
   var args;
 
   // check for named arguments
-  if (_.isString(options)) {
+  if (!_.isObject(options)) {
     // no named args
     args = [].slice.call(arguments, 1).map(function(arg) {
       if (_.isString(arg)) {

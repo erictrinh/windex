@@ -91,10 +91,11 @@ exports.moveMouse = function() {
     .screenFromWindow()
     .frameWithoutDockOrMenu()
     .then(function(screen) {
-      console.log(screen);
-      var w = screen.frame.w,
+      var x = screen.frame.x,
+        y = screen.frame.y,
+        w = screen.frame.w,
         h = screen.frame.h;
 
-      runScript('move', {x: w/2, y: h/2});
+      runScript('move', w/2 + x, h/2 + y);
     });
 };
