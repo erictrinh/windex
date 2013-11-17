@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var exec = require('child_process').exec;
+var runCmd = require('./run_cmd');
 
 module.exports = function(scriptName, options) {
   var args;
@@ -34,11 +35,5 @@ module.exports = function(scriptName, options) {
     command = 'sh ' + command;
   }
 
-  console.log(command);
-
-  exec(command, function (error) {
-    if (error !== null) {
-      console.log('exec error: ' + error);
-    }
-  });
+  runCmd(command);
 };

@@ -8,7 +8,7 @@ var _ = require('lodash'),
   moveMouse = mover.moveMouse,
   grid = require('./grid'),
   runScript = require('./run_script'),
-  focusApp = runScript.bind(null, 'findopen.sh'),
+  focusApp = require('./focus_app'),
   openLatest = runScript.bind(null, 'openlatest.sh');
 
 var mode = 3;
@@ -92,11 +92,7 @@ vent.on('shortcut', function(key) {
   var app = appBindings[key];
 
   if (app) {
-    if (app === 'Finder') {
-      runScript('openfinder.sh');
-    } else {
-      focusApp(app);
-    }
+    focusApp(app);
   } else if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
     dualKeyBindings[dualKey].call(this);
   } else if (singleKeyBindings[key]) {
