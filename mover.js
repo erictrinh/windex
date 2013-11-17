@@ -1,9 +1,8 @@
 'use strict';
 
-var Zephyros = require('node-zephyros');
 var _ = require('lodash');
 
-var z = new Zephyros();
+var z = require('./z');
 
 var runScript = require('./run_script');
 

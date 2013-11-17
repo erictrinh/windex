@@ -1,10 +1,9 @@
 'use strict';
 
-var Zephyros = require('node-zephyros');
 var EventEmitter = require('events').EventEmitter;
 
 var vent = new EventEmitter();
-var z = new Zephyros();
+var z = require('./z');
 
 var hyper = ['Cmd', 'Shift', 'Ctrl', 'Alt'];
 
