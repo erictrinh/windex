@@ -42,8 +42,8 @@ var singleKeyBindings = {
 
   '`' : moveToNextScreen,
   'delete' : function() {
-    alert('Center mouse');
     moveMouse();
+    alert('Center mouse');
   }
 };
 
@@ -59,7 +59,8 @@ var dualKeyBindings = {
   '1 2' : function() { moveWithinScreen(grid(1, mode, 2)); },
   '2 3' : function() { moveWithinScreen(grid(2, mode, 2)); },
   '1 3' : function() { moveWithinScreen(grid(1, mode, 3)); },
-  '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); }
+  '2 4' : function() { moveWithinScreen(grid(2, mode, 3)); },
+  '3 4' : function() { moveWithinScreen(grid(3, mode, 2)); }
 };
 
 var appBindings = {
@@ -77,7 +78,7 @@ var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
   var key = binding[0],
     val = binding[1],
     twoKeys = key.split(' '),
-    reversed = _(twoKeys).reverse().join(' ').valueOf();
+    reversed = _(twoKeys).reverse().join(' ');
 
   return [reversed, val];
 }).object().valueOf();
