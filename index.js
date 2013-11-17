@@ -1,7 +1,10 @@
 'use strict';
 
 var _ = require('lodash'),
-  vent = require('./shortcut_emitter'),
+
+  vent = require('./combo_emitter'),
+  alert = require('./alert'),
+
   mover = require('./mover'),
   moveWithinScreen = mover.moveWithinScreen,
   moveToNextScreen = mover.moveToNextScreen,
@@ -15,7 +18,7 @@ var mode = 3;
 
 var changeMode = function(newMode) {
   mode = newMode;
-  vent.emit('alert', 'Change mode ' + mode);
+  alert('Change mode ' + mode);
 };
 
 var leftHalf    = grid(1, 2),
@@ -39,7 +42,7 @@ var singleKeyBindings = {
 
   '`' : moveToNextScreen,
   'delete' : function() {
-    vent.emit('alert', 'Center mouse');
+    alert('Center mouse');
     moveMouse();
   }
 };
@@ -79,26 +82,16 @@ var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
   return [reversed, val];
 }).object().valueOf();
 
-_.extend(dualKeyBindings, reversedKeyBindings);
-
-var lastKey = '';
-var lastTime = Date.now();
+var keyBindings = _.extend(
+  dualKeyBindings,
+  reversedKeyBindings,
+  singleKeyBindings
+);
 
 vent.on('shortcut', function(key) {
-  var now = Date.now();
-
-  var dualKey = key + ' ' + lastKey;
-
-  var app = appBindings[key];
-
-  if (app) {
-    focusApp(app);
-  } else if (now - lastTime < 300 && dualKeyBindings[dualKey]) {
-    dualKeyBindings[dualKey].call(this);
-  } else if (singleKeyBindings[key]) {
-    singleKeyBindings[key].call(this);
+  if (key in appBindings) {
+    focusApp(appBindings[key]);
+  } else if (key in keyBindings) {
+    keyBindings[key].call(this);
   }
-
-  lastKey = key;
-  lastTime = Date.now();
 });

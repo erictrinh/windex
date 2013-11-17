@@ -20,8 +20,4 @@ var hyper = ['Cmd', 'Shift', 'Ctrl', 'Alt'];
   });
 });
 
-vent.on('alert', function(message) {
-  z.api().alert(message);
-});
-
 module.exports = vent;
