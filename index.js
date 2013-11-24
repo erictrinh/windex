@@ -6,6 +6,7 @@ var _ = require('lodash'),
   alert = require('./alert'),
 
   mover = require('./mover'),
+  undo = mover.undoMove,
   moveWithinScreen = mover.moveWithinScreen,
   moveToNextScreen = mover.moveToNextScreen,
   moveMouse = mover.moveMouse,
@@ -39,6 +40,7 @@ var singleKeyBindings = {
   '4'      : function() { moveWithinScreen(grid(4, mode)); },
 
   'o'      : openLatest,
+  'u'      : undo,
 
   '`' : moveToNextScreen,
   'delete' : function() {
@@ -53,8 +55,8 @@ var dualKeyBindings = {
   'down right'  : function() { moveWithinScreen(bottomRight); },
   'down left'   : function() { moveWithinScreen(bottomLeft); },
 
-  '3 3' : function() { changeMode(3); },
-  '4 4' : function() { changeMode(4); },
+  '3 3' : function() { changeMode(3); undo(); },
+  '4 4' : function() { changeMode(4); undo(); },
 
   '1 2' : function() { moveWithinScreen(grid(1, mode, 2)); },
   '2 3' : function() { moveWithinScreen(grid(2, mode, 2)); },
