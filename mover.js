@@ -17,39 +17,32 @@ var setCoords = function(coords) {
       return window;
     })
     .setWindowFrame(function(win) {
-      win.frame.x = coords.x;
-      win.frame.y = coords.y;
-      win.frame.w = coords.w;
-      win.frame.h = coords.h;
+      if ('x' in coords)
+        win.frame.x = coords.x;
+      if ('y' in coords)
+        win.frame.y = coords.y;
+      if ('w' in coords)
+        win.frame.w = coords.w;
+      if ('h' in coords)
+        win.frame.h = coords.h;
       return win;
     });
 };
 
 var moveInScreen = function(screen, multiples) {
   var frame = screen.frame;
-  var newCoords = {
-    x : frame.x + frame.w * multiples.x,
-    y : frame.y + frame.h * multiples.y,
-    w : frame.w * multiples.w,
-    h : frame.h * multiples.h
-  };
+  var newCoords = {};
+
+  if ('x' in multiples)
+    newCoords.x = frame.x + frame.w * multiples.x;
+  if ('y' in multiples)
+    newCoords.y = frame.y + frame.h * multiples.y;
+  if ('w' in multiples)
+    newCoords.w = frame.w * multiples.w;
+  if ('h' in multiples)
+    newCoords.h = frame.h * multiples.h;
 
   setCoords(newCoords);
-
-  // z.api()
-  //   .windowFocused()
-  //   .getWindowFrame()
-  //   .then(function(window) {
-  //     lastState = _.clone(window.frame, true);
-  //     return window;
-  //   })
-  //   .setWindowFrame(function(win) {
-  //     win.frame.x = frame.x + frame.w * multiples.x;
-  //     win.frame.y = frame.y + frame.h * multiples.y;
-  //     win.frame.w = frame.w * multiples.w;
-  //     win.frame.h = frame.h * multiples.h;
-  //     return win;
-  //   });
 };
 
 exports.moveToNextScreen = function() {

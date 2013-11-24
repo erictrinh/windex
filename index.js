@@ -33,6 +33,8 @@ var leftHalf    = grid(1, 2),
 var singleKeyBindings = {
   'right'  : function() { moveWithinScreen(rightHalf); },
   'left'   : function() { moveWithinScreen(leftHalf); },
+  'up'     : function() { moveWithinScreen({ y: 0, h: 0.5 }); },
+  'down'   : function() { moveWithinScreen({ y: 0.5, h: 0.5 }); },
   'return' : function() { moveWithinScreen(fullScreen); },
   '1'      : function() { moveWithinScreen(grid(1, mode)); },
   '2'      : function() { moveWithinScreen(grid(2, mode)); },
