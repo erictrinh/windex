@@ -56,16 +56,12 @@ exports.moveToNextScreen = function() {
     z.api()
       .screens()
       .then(function(screens) {
-        var notThisScreen = _.find(screens, function(screen) {
-          return screen.id !== screenID;
-        });
+        var currScreenIndex = _.findIndex(screens, { id: screenID });
+        var nextScreenIndex = currScreenIndex >= screens.length - 1 ?
+          0 : currScreenIndex + 1;
+        var nextScreen = screens[nextScreenIndex];
 
-        if (notThisScreen) {
-          return notThisScreen;
-        } else {
-          // return original screen
-          return {id: screenID};
-        }
+        return nextScreen;
       })
       .frameWithoutDockOrMenu()
       .then(function(screen) {
