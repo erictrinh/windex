@@ -5,9 +5,9 @@ var Bacon = require('baconjs').Bacon;
 var EventEmitter = require('events').EventEmitter;
 var vent = new EventEmitter();
 
-var shortcutEmitter = require('./shortcut_emitter');
+var keyEmitter = require('./key_emitter');
 
-var keys = Bacon.fromEventTarget(shortcutEmitter, 'shortcut'),
+var keys = Bacon.fromEventTarget(keyEmitter, 'shortcut'),
   times = keys.map(function() { return Date.now(); }),
   dualKeys = keys.diff('', function(a, b) { return a + ' ' + b; }),
   timediff = times.diff(Date.now(), function(a, b) { return b - a; });
