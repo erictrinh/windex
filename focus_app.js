@@ -1,6 +1,7 @@
 'use strict';
 
 var runCmd = require('./run_cmd');
+var runScript = require('./run_script.js')
 
 var appMap = {
   'Finder': '/System/Library/CoreServices/Finder.app',
@@ -19,11 +20,17 @@ var nameToLocation = function(name) {
 
   if (name in appMap) {
     return escape(appMap[name]);
-  } else {
+  } else if (fs.existsSync('/Applications/' + name + '.app')) {
     return '/Applications/' + escape(name) + '.app';
+  } else {
+    return null;
   }
 };
 
 module.exports = function(appName) {
-  runCmd('open ' + nameToLocation(appName));
+  if (nameToLocation(appName)) {
+    runCmd('open ' + nameToLocation(appName));
+  } else {
+    runScript('find_and_open.sh', escape(name))
+  }
 };

@@ -42,7 +42,6 @@ var singleKeyBindings = {
   '4'      : function() { moveWithinScreen(grid(4, mode)); },
 
   'o'      : openLatest,
-  'u'      : undo,
 
   '`' : moveToNextScreen,
   'delete' : function() {
@@ -52,10 +51,10 @@ var singleKeyBindings = {
 };
 
 var dualKeyBindings = {
-  'up right'    : function() { moveWithinScreen(topRight); },
-  'up left'     : function() { moveWithinScreen(topLeft); },
-  'down right'  : function() { moveWithinScreen(bottomRight); },
-  'down left'   : function() { moveWithinScreen(bottomLeft); },
+  'up right'   : function() { moveWithinScreen(topRight); },
+  'up left'    : function() { moveWithinScreen(topLeft); },
+  'down right' : function() { moveWithinScreen(bottomRight); },
+  'down left'  : function() { moveWithinScreen(bottomLeft); },
 
   '3 3' : function() { changeMode(3); undo(); },
   '4 4' : function() { changeMode(4); undo(); },
@@ -68,6 +67,7 @@ var dualKeyBindings = {
 };
 
 var appBindings = {
+  'a': 'Atom',
   'f': 'Finder',
   'c': 'Google Chrome',
   'g': 'GitHub',
@@ -75,7 +75,8 @@ var appBindings = {
   'y': 'Spotify',
   'm': 'Messages',
   'h': 'HipChat',
-  't': 'Terminal'
+  't': 'iTerm',
+  'p': 'Preview'
 };
 
 var reversedKeyBindings = _(dualKeyBindings).pairs().map(function(binding) {
